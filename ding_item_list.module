@@ -185,7 +185,12 @@ function ding_item_list_search_ting($query = '', $page = 1, $records = 10, $sort
 
   if (!empty($query)) {
     $query = '(' . $query . ')';
-    $options = array('sort' => $sort, );
+
+    $options = array(
+      'sort' => $sort,
+      'skip_relations' => TRUE,
+    );
+
     $search_result = ting_do_search($query, $page, $records, $options);
 
     return $search_result;
