@@ -1,6 +1,8 @@
-core = "7.x"
-dependencies[] = "image"
-description = "Image styles export ding item list"
-features[image][] = "ding_item_list"
-name = "Ding item list image styles"
-package = "Artesis"
+name = Ding item list image styles
+description = Image styles export ding item list
+core = 7.x
+package = Artesis
+php = 5.2.4
+dependencies[] = image
+features[features_api][] = api:1
+features[image][] = ding_item_list
