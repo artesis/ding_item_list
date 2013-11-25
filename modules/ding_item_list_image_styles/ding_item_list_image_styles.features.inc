@@ -10,7 +10,7 @@
 function ding_item_list_image_styles_image_default_styles() {
   $styles = array();
 
-  // Exported image style: ding_item_list
+  // Exported image style: ding_item_list.
   $styles['ding_item_list'] = array(
     'name' => 'ding_item_list',
     'effects' => array(
@@ -31,6 +31,7 @@ function ding_item_list_image_styles_image_default_styles() {
         'weight' => '1',
       ),
     ),
+    'label' => 'ding_item_list',
   );
 
   return $styles;
