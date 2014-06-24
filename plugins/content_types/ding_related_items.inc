@@ -31,13 +31,22 @@ function ding_related_items_plugin_render($subtype, $conf, $panel_args, $context
 
   foreach ($field_content as $k => $v) {
     if (is_numeric($k)) {
-      $objects = ding_item_list_get_objects($v['#object']->reply->localId, 1, TRUE);
+      $objects = ding_item_list_get_objects($v['#object']->getLocalId(), 1, TRUE);
 
       if (is_array($objects)) {
         foreach ($objects as $object) {
+          $buttons = module_invoke(
+            'ding_reservation',
+            'ding_entity_buttons',
+            'ding_entity',
+            $object->entity,
+            'ajax'
+          );
+
           $markup .= theme('ding_item_list_item', array(
             'faust' => $object->id,
-            'cover' => (!empty($object->image) && file_exists($object->image)) ? image_style_url('ding_item_list', $object->image) : '/' . drupal_get_path('module', 'ding_item_list') . '/images/no-image-minil.png',
+            'local_id' => $object->local_id,
+            'cover' => !empty($object->image) ? $object->image : '/' . drupal_get_path('module', 'ding_item_list') . '/images/no-image-minil.png',
             'title' => $object->title,
             'author' => $object->creator,
             'year' => $object->year,
@@ -45,9 +54,9 @@ function ding_related_items_plugin_render($subtype, $conf, $panel_args, $context
             'rating' => $object->rating,
             'rating_count' => $object->rating_count,
             'review_count' => $object->comment_count,
-            'loan_form' => drupal_render(module_invoke('ding_reservation', 'ding_entity_buttons', 'ding_entity', $object->primary_object, 'ajax')),
+            'loan_form' => drupal_render($buttons),
           ));
-          $ting_objects[] = $object->primary_object;
+          $ting_objects[] = $object->entity;
         }
       }
     }
