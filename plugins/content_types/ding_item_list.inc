@@ -39,20 +39,20 @@ function ding_item_list_plugin_render($subtype, $conf, $panel_args, $context) {
   }
 
   // Check if cover images are physically present.
-  try {
-    ding_item_list_create_missed_covers($objects);
-  }
-  catch (Exception $e) {
-    // No special handling at the moment.
-  }
+  ding_item_list_create_missed_covers($objects);
 
   $markup = '';
   $ting_objects = array();
+
+  $default_image = '/' . drupal_get_path('module', 'ding_item_list') . '/images/no-image-minil.png';
+
   foreach ($objects as $object) {
-    $loan_form = module_invoke('ding_reservation', 'ding_entity_buttons', 'ding_entity', $object->primary_object, 'ajax');
+    // Rewrite image.
+    $loan_form = module_invoke('ding_reservation', 'ding_entity_buttons', 'ding_entity', $object->object, 'ajax');
     $markup .= theme('ding_item_list_item', array(
       'faust' => $object->id,
-      'cover' => (!empty($object->image) && file_exists($object->image)) ? image_style_url('ding_item_list', $object->image) : '/' . drupal_get_path('module', 'ding_item_list') . '/images/no-image-minil.png',
+      'local_id' => $object->local_id,
+      'cover' => (!empty($object->image)) ? file_create_url($object->image) : $default_image,
       'title' => $object->title,
       'author' => $object->creator,
       'year' => $object->year,
@@ -63,7 +63,7 @@ function ding_item_list_plugin_render($subtype, $conf, $panel_args, $context) {
       'loan_form' => drupal_render($loan_form),
       )
     );
-    $ting_objects[] = $object->primary_object;
+    $ting_objects[] = $object->object;
   }
 
   // Add ajax availability checks.

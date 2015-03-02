@@ -5,15 +5,16 @@
  * Template file for single item list item.
  */
 $alt = check_plain($title . ' ' . $author);
+$item_url = url('search/ting/' . $local_id, array('query' => array('permalink' => 1)));
 ?>
 <div class="ding-item-list-item">
   <div class="item-cover">
-    <a href="/ting/object/<?php print $faust; ?>">
+    <a href="<?php echo $item_url ?>">
       <img src="<?php print $cover; ?>" alt="<?php echo $alt; ?>" />
     </a>
   </div>
   <div class="item-details">
-    <div class="item-title"><a href="/ting/object/<?php print $faust; ?>"><?php print $title; ?></a></div>
+    <div class="item-title"><a href="<?php echo $item_url ?>"><?php print $title; ?></a></div>
     <div class="item-author"><?php print t('By');?> <?php print $author; ?> (<?php print $year;?>)</div>
     <?php if ($has_rating): ?>
       <div class="item-rating">
