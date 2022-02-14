@@ -54,7 +54,7 @@ function ding_item_list_plugin_render($subtype, $conf, $panel_args, $context) {
       'local_id' => $object->local_id,
       'cover' => (!empty($object->image)) ? file_create_url($object->image) : $default_image,
       'title' => $object->title,
-      'author' => $object->creator,
+      'author' => is_array($object->creator) ? implode(', ', $object->creator) : $object->creator,
       'year' => $object->year,
       'has_rating' => $object->has_rating,
       'rating' => $object->rating,
